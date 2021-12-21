@@ -6,11 +6,11 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const listContacts = async () => {
+const listContacts = () => {
   return contacts
 }
 
-const getContactById = async (contactId) => {
+const getContactById = (contactId) => {
   const contact = contacts.find((contact) => contact.id === contactId)
   return contact
 }
@@ -40,16 +40,13 @@ const removeContact = async (contactId) => {
 // return contacts
 
 const addContact = async ({ name, email, phone }) => {
-  if (name && email && phone) {
-    const newContact = { name, email, phone, id: uuidv4() }
-    contacts.push(newContact)
-    await fs.writeFile(
-      path.join(__dirname, 'contacts.json'),
-      JSON.stringify(contacts, null, 2)
-    )
-    return newContact
-  }
-  return 'Please check your input data!'
+  const newContact = { name, email, phone, id: uuidv4() }
+  contacts.push(newContact)
+  await fs.writeFile(
+    path.join(__dirname, 'contacts.json'),
+    JSON.stringify(contacts, null, 2)
+  )
+  return newContact
 }
 
 const updateContact = async (contactId, body) => {
